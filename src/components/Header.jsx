@@ -1,5 +1,4 @@
 const Header = ({activitiesList}) => {
-    console.log(activitiesList)
     const lastActivity = activitiesList[0]
     
     return (
