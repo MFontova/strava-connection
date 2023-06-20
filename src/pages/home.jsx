@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getActivities } from "../providers/stravaProvider";
 import Header from "../components/Header";
 import { LastActivitiesList } from "../components/LastActivitiesList";
@@ -10,11 +10,17 @@ const Home = ({ accessToken }) => {
 
   useEffect(() => {
     const fetchActivities = async () => {
-      if (!activitiesLoaded) { // Verifica si las actividades ya se cargaron previamente
+      const cachedActivities = localStorage.getItem("activities");
+
+      if (cachedActivities) {
+        setActivities(JSON.parse(cachedActivities));
+        setActivitiesLoaded(true);
+      } else {
         try {
           const response = await getActivities(accessToken);
           setActivities(response);
-          setActivitiesLoaded(true); // Marca las actividades como cargadas
+          setActivitiesLoaded(true);
+          localStorage.setItem("activities", JSON.stringify(response));
         } catch (error) {
           return window.location.replace("/login");
         }
@@ -22,8 +28,9 @@ const Home = ({ accessToken }) => {
     };
 
     fetchActivities();
-  }, [accessToken, activitiesLoaded]); // Agrega 'activitiesLoaded' como dependencia
+  }, []); // El arreglo de dependencias está vacío para que se ejecute solo una vez al montar el componente
 
+  console.log(activities)
   return activities.length > 0 ? (
     <>
       <Header activitiesList={activities} />

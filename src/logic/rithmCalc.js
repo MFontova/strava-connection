@@ -11,5 +11,6 @@ export const rythm = ((time,distance) => {
     const segundos = Math.round((ritmoEnMinutosPorKilometro % 1) * 60)
     const segundosStr = segundos.toString().length == 1 ? '0' + segundos.toString() : segundos.toString()
 
+    return minutos + (segundos/100)
     return minutos+':'+segundosStr
 })

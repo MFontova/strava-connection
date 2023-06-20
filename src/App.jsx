@@ -11,6 +11,7 @@ import Home from "./pages/home"
 
 export const App = () => {  
   if(!document.cookie){
+    console.log('no cookies yet')
     return(
       <Navigate to={"/login"} />
     )
@@ -30,19 +31,9 @@ export const App = () => {
     )
   }
 
-  
-  // const activities = getActivities(cookiesObj.accessToken)
   return (
     <div>
       <Home accessToken={cookiesObj.accessToken}/>
-      {/* {activities.length > 0 ? (
-        <>
-          <Header activitiesList={activities} />
-          <LastActivitiesList activitiesList={activities} />
-        </>
-      ) : (
-        <p>Cargando...</p>
-      )} */}
     </div>
   );
 }
